@@ -17,6 +17,8 @@ const playAgainButton = document.querySelector(".play-again");
 
 const word = "magnolia";
 
+const guessedLetters = [];
+
 // Function to update the word in progress with dots for unguessed letters
 const updatedWord = function (word) {
   const wordArray = [];
@@ -43,10 +45,14 @@ guessButton.addEventListener("click", function (e) {
 
   const results = checkInput(wordValue);
   console.log(results);
+
+  if (results !== undefined) {
+    makeGuess(results);
+  }
 });
 
 // Function to check if the input is valid
-function checkInput(input) {
+const checkInput = function (input) {
   const acceptedLetter = /[a-zA-Z]/;
   if (input.length === 0) {
     message.innerHTML = "Please enter a letter.";
@@ -57,4 +63,17 @@ function checkInput(input) {
   } else {
     return input;
   }
-}
+};
+
+//Function to process valid guessed letter
+const makeGuess = function (letter) {
+  letter = letter.toUpperCase();
+
+  if (guessedLetters.includes(letter)) {
+    message.innerHTML = "You've already guessed that letter. Try again.";
+  } else {
+    guessedLetters.push(letter);
+  }
+
+  console.log(guessedLetters);
+};
