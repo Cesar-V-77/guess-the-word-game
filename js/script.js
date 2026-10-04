@@ -74,6 +74,19 @@ const makeGuess = function (letter) {
   } else {
     guessedLetters.push(letter);
   }
+  if (guessedLetters.includes(letter)) {
+    displayGuessLetters(guessedLetters);
+  }
 
   console.log(guessedLetters);
+};
+
+// Function to display guessed letters in the unordered list
+const displayGuessLetters = function (guessedLetters) {
+  guessLetters.innerHTML = "";
+  for (let letter of guessedLetters) {
+    let li = document.createElement("li");
+    li.innerHTML = letter;
+    guessLetters.append(li);
+  }
 };
