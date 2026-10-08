@@ -79,6 +79,7 @@ const makeGuess = function (letter) {
   }
 
   console.log(guessedLetters);
+  progressWord(guessedLetters);
 };
 
 // Function to display guessed letters in the unordered list
@@ -89,4 +90,23 @@ const displayGuessLetters = function (guessedLetters) {
     li.innerHTML = letter;
     guessLetters.append(li);
   }
+};
+
+// Function to update the word in progress with guessed letters and dots for unguessed letters
+const progressWord = function (guessedLetters) {
+  const wordUpper = word.toUpperCase();
+  const wordArray = wordUpper.split("");
+
+  console.log(wordArray);
+
+  const newWord = [];
+  for (let letter of wordArray) {
+    if (guessedLetters.includes(letter)) {
+      newWord.push(letter.toUpperCase());
+    } else {
+      newWord.push("●");
+    }
+  }
+
+  wordInProgress.innerHTML = newWord.join("");
 };
