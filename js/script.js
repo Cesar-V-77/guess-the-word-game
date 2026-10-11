@@ -109,4 +109,13 @@ const progressWord = function (guessedLetters) {
   }
 
   wordInProgress.innerHTML = newWord.join("");
+  checkWin();
+};
+
+// Function to check if the player has guessed the correct word
+const checkWin = function () {
+  if (wordInProgress.innerHTML === word.toUpperCase()) {
+    message.classList.add("win");
+    message.innerHTML = `<p class="highlight">You guessed the correct word! Conrats!</p>`;
+  }
 };
