@@ -7,7 +7,7 @@ const letterInput = document.querySelector(".letter");
 // The empty paragraph where the word in progress will appear
 const wordInProgress = document.querySelector(".word-in-progress");
 // The paragraph where the remaining guesses will display
-const remainingGuesses = document.querySelector(".remaining");
+const remainingGuessesElement = document.querySelector(".remaining");
 // The span inside the paragraph where the remaining guesses will display
 const remainingSpan = document.querySelector(".remaining span");
 // The empty paragraph where messages will appear when the player guesses a letter
@@ -18,6 +18,8 @@ const playAgainButton = document.querySelector(".play-again");
 const word = "magnolia";
 
 const guessedLetters = [];
+
+let remainingGuesses = 8;
 
 // Function to update the word in progress with dots for unguessed letters
 const updatedWord = function (word) {
@@ -78,6 +80,7 @@ const makeGuess = function (letter) {
     displayGuessLetters(guessedLetters);
   }
 
+  updateRemainingGuesses(letter);
   console.log(guessedLetters);
   progressWord(guessedLetters);
 };
@@ -110,6 +113,24 @@ const progressWord = function (guessedLetters) {
 
   wordInProgress.innerHTML = newWord.join("");
   checkWin();
+};
+
+// Function to update the remaining guesses and display messages
+const updateRemainingGuesses = function (guess) {
+  const upperWord = word.toUpperCase();
+  if (!upperWord.includes(guess)) {
+    message.innerHTML = `Sorry, the word has no ${guess}.`;
+    remainingGuesses -= 1;
+  } else if (upperWord.includes(guess)) {
+    message.innerHTML = `Good guess! The word has the letter ${guess}.`;
+  }
+  if (remainingGuesses === 0) {
+    message.innerHTML = `Game over! The word was <span class="highlight">${word}</span>.`;
+  } else if (remainingGuesses === 1) {
+    remainingSpan.innerHTML = `${remainingGuesses} guess`;
+  } else if (remainingGuesses > 1) {
+    remainingSpan.innerHTML = `${remainingGuesses} guesses`;
+  }
 };
 
 // Function to check if the player has guessed the correct word
