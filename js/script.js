@@ -147,6 +147,7 @@ const updateRemainingGuesses = function (guess) {
   } else if (remainingGuesses > 1) {
     remainingSpan.innerHTML = `${remainingGuesses} guesses`;
   }
+  startOver();
 };
 
 // Function to check if the player has guessed the correct word
@@ -154,5 +155,16 @@ const checkWin = function () {
   if (wordInProgress.innerHTML === word.toUpperCase()) {
     message.classList.add("win");
     message.innerHTML = `<p class="highlight">You guessed the correct word! Conrats!</p>`;
+    startOver();
+  }
+};
+
+// Function to hide and show elements when the game is over or won
+const startOver = function () {
+  if (remainingGuesses === 0 || message.classList.contains("win")) {
+    guessButton.classList.add("hide");
+    remainingGuessesElement.classList.add("hide");
+    guessLetters.classList.add("hide");
+    playAgainButton.classList.remove("hide");
   }
 };
