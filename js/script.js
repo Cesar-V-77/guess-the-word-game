@@ -168,3 +168,18 @@ const startOver = function () {
     playAgainButton.classList.remove("hide");
   }
 };
+
+// Event listener for the play again button and reset the game
+playAgainButton.addEventListener("click", function () {
+  message.classList.remove("win");
+  message.innerHTML = "";
+  guessLetters.innerHTML = "";
+  remainingGuesses = 8;
+  guessedLetters.length = 0;
+  remainingSpan.innerHTML = `${remainingGuesses} guesses`;
+  guessButton.classList.remove("hide");
+  remainingGuessesElement.classList.remove("hide");
+  guessLetters.classList.remove("hide");
+  playAgainButton.classList.add("hide");
+  getWord();
+});
