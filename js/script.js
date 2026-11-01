@@ -15,6 +15,8 @@ const message = document.querySelector(".message");
 // The hidden button that will appear prompting the player to play again
 const playAgainButton = document.querySelector(".play-again");
 
+let word = "magnolia";
+
 const guessedLetters = [];
 
 let remainingGuesses = 8;
@@ -25,17 +27,13 @@ const getWord = async function () {
     "https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt",
   );
   const words = await response.text();
-  // console.log(words);
-
   const wordArray = words.split("\n");
-  // console.log(wordArray);
   const randomIndex = Math.floor(Math.random() * wordArray.length);
   word = wordArray[randomIndex].trim();
   updatedWord(word);
 };
 
 getWord();
-let word = "magnolia";
 
 // Function to update the word in progress with dots for unguessed letters
 const updatedWord = function (word) {
@@ -48,9 +46,6 @@ const updatedWord = function (word) {
   wordInProgress.innerHTML = wordArray.join("");
   return wordArray;
 };
-
-// updatedWord(word);
-// console.log(updatedWord(word));
 
 // Event listener for the guess button
 guessButton.addEventListener("click", function (e) {
@@ -91,14 +86,11 @@ const makeGuess = function (letter) {
     message.innerHTML = "You've already guessed that letter. Try again.";
   } else {
     guessedLetters.push(letter);
-  }
-  if (guessedLetters.includes(letter)) {
     displayGuessLetters(guessedLetters);
+    updateRemainingGuesses(letter);
+    console.log(guessedLetters);
+    progressWord(guessedLetters);
   }
-
-  updateRemainingGuesses(letter);
-  console.log(guessedLetters);
-  progressWord(guessedLetters);
 };
 
 // Function to display guessed letters in the unordered list
@@ -115,8 +107,6 @@ const displayGuessLetters = function (guessedLetters) {
 const progressWord = function (guessedLetters) {
   const wordUpper = word.toUpperCase();
   const wordArray = wordUpper.split("");
-
-  console.log(wordArray);
 
   const newWord = [];
   for (let letter of wordArray) {
@@ -147,6 +137,7 @@ const updateRemainingGuesses = function (guess) {
   } else if (remainingGuesses > 1) {
     remainingSpan.innerHTML = `${remainingGuesses} guesses`;
   }
+
   startOver();
 };
 
@@ -155,6 +146,7 @@ const checkWin = function () {
   if (wordInProgress.innerHTML === word.toUpperCase()) {
     message.classList.add("win");
     message.innerHTML = `<p class="highlight">You guessed the correct word! Conrats!</p>`;
+
     startOver();
   }
 };
